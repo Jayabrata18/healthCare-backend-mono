@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account Activation</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+
+      h2 {
+        font-weight: bold;
+      }
+
+      .pin-container {
+        text-align: center;
+        font-size: 36px; /* Increased font size for the PIN */
+        margin: 20px 0;
+      }
+
+      .copy-button {
+        display: block;
+        margin: 10px auto;
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .instructions {
+        text-align: center;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Account Activation</h1>
+      <p>Hello <%= doctor.name %>,</p>
+      <div class="pin-container">
+        Your activation PIN:
+        <h2 style="color: #28a745"><%= activationCode %></h2>
+      </div>
+      <button
+        class="copy-button"
+        onclick="copyToClipboard('<%= activationCode %>')"
+      >
+        Copy PIN
+      </button>
+      <p class="instructions">
+        Please use this PIN to activate your account. This code is valid for 5
+        minutes.
+      </p>
+    </div>
+
+    <script>
+      function copyToClipboard(text) {
+        navigator.clipboard.writeText(text);
+        alert("PIN copied to clipboard!");
+      }
+    </script>
+  </body>
+</html>

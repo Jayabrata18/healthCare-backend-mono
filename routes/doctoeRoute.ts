@@ -5,7 +5,7 @@ import { updatePassword } from "../controllers/doctorsController";
 const doctorRouter = express.Router();
 
 doctorRouter.post(
-  "/updatepassword",
+  "/update-password",
   isAuthenticated,
   authorizeRoles("Doctor"),
   updatePassword

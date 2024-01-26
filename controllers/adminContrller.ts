@@ -4,9 +4,13 @@ import { NextFunction, Request, Response } from "express";
 import catchAsyncError from "../middleware/catchAsynceErroe";
 import ErrorHandler from "../utils/ErrorHandler";
 import userModel from "../models/userModel";
-import { getAllUsersService, updateUserRoleService } from "../services/userService";
+import {
+  getAllAdminService,
+  getAllDoctorService,
+  getAllUsersService,
+  updateUserRoleService,
+} from "../services/userService";
 import { redis } from "../utils/redis";
-
 
 //create doctor --only admin
 export const createDoctor = catchAsyncError(
@@ -49,8 +53,6 @@ export const createDoctor = catchAsyncError(
   }
 );
 
-//admin section
-
 //get all users ---only for admin
 export const getAllUsers = catchAsyncError(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -89,6 +91,28 @@ export const deleteUser = catchAsyncError(
         status: "success",
         message: "User deleted successfully",
       });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// get all doctors --only for admin
+
+export const getAllDoctors = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllDoctorService(res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+// get all admin
+export const getAllAdmin = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllAdminService(res);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
     }

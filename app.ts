@@ -4,7 +4,6 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { ErrorMiddleware } from "./middleware/error";
 import userRouter from "./routes/userRoutes";
-// import orderRouter from "./routes/orderRoute";
 import notificationRoute from "./routes/notificationRoute";
 import adminRouter from "./routes/adminRoutes";
 import doctorRouter from "./routes/doctoeRoute";

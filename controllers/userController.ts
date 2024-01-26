@@ -15,6 +15,7 @@ import {
 import { redis } from "../utils/redis";
 import {
   getAllUsersService,
+  getDoctorBySpecializationService,
   getUserById,
   updateUserRoleService,
 } from "../services/userService";
@@ -371,6 +372,7 @@ export const updateUserPassword = catchAsyncError(
 );
 
 //update profile picture
+
 // interface IUpdateProfilePicture {
 //   avatar: string;
 // }
@@ -416,6 +418,7 @@ export const updateUserPassword = catchAsyncError(
 // });
 
 // //apply as a doctor
+
 // export const applyAsDoctor = catchAsyncError(async(req: Request, res: Response, next: NextFunction) => {
 //   try {
 //     const userId = req.user?._id || "";
@@ -430,3 +433,68 @@ export const updateUserPassword = catchAsyncError(
 //   }
 // })
 
+//get doctors by specialization
+export const getDoctorBySpecialization = catchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { specialization } = req.params;
+      getDoctorBySpecializationService(res, specialization);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+//give review to doctor
+
+export const userReview = catchAsyncError(
+  async (req: RequestApi, res: Response, next: NextFunction) => {
+    try {
+      const reviewerUserId = req.user?._id || ""; // ID of the user writing the review
+      const userIdToReview = req.params; // ID of the user to be reviewed
+      const { rating, text } = req.body;
+      if (!rating || !text) {
+        return res.status(400).json({
+          status: "error",
+          message: "Rating and text are required for a review",
+        });
+      }
+      const reviewerUserInfo = await getUserById(reviewerUserId, res);
+
+      if (!reviewerUserInfo) {
+        return res.status(404).json({
+          status: "error",
+          message: "Reviewer user not found in Redis",
+        });
+      }
+
+      const { _id: reviewerId, name: reviewerName } = reviewerUserInfo;
+
+      // Fetch the user to be reviewed from the database
+      const userToReview = await userModel.findById(userIdToReview);
+
+      if (!userToReview) {
+        return res.status(404).json({
+          status: "error",
+          message: "User to be reviewed not found in the database",
+        });
+      }
+
+      userToReview.reviews.push({
+        _id: reviewerId,
+        reviewerName,
+        rating,
+        text,
+      });
+
+      await userToReview.save();
+
+      res.status(201).json({
+        status: "success",
+        message: "Review added successfully",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);

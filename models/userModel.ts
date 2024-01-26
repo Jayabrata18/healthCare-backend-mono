@@ -5,7 +5,6 @@ import jwt from "jsonwebtoken";
 
 const emailRegePattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-
 enum SpecialistType {
   Dentist = "Dentist",
   Cardiology = "Cardiology",
@@ -26,6 +25,12 @@ export interface IChemberAddress {
   pincode: string;
   district: string;
   state: string;
+}
+interface IReview {
+  _id: string;
+  reviewerName: string;
+  rating: number;
+  text: string;
 }
 
 export interface IUser extends Document {
@@ -50,6 +55,7 @@ export interface IUser extends Document {
   experience: number;
   education: string;
   chemberAddress: IChemberAddress[];
+  reviews: IReview[];
 
   comparePassword(password: string): Promise<boolean>;
   SignAccessToken: () => string;
@@ -161,6 +167,18 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
         },
         district: String,
         state: String,
+      },
+    ],
+    reviews: [
+      {
+        _id: String,
+        reviewerName: String,
+        rating: {
+          type: Number,
+          min: 1,
+          max: 5,
+        },
+        text: String,
       },
     ],
   },

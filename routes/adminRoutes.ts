@@ -1,6 +1,13 @@
 import express from "express";
 import { authorizeRoles, isAuthenticated } from "../middleware/auth";
-import { createDoctor, deleteUser, getAllUsers, updateUserRole } from "../controllers/adminContrller";
+import {
+  createDoctor,
+  deleteUser,
+  getAllAdmin,
+  getAllDoctors,
+  getAllUsers,
+  updateUserRole,
+} from "../controllers/adminContrller";
 
 const adminRouter = express.Router();
 
@@ -17,7 +24,7 @@ adminRouter.get(
   getAllUsers
 );
 adminRouter.put(
-  "/update-user",
+  "/update-role",
   isAuthenticated,
   authorizeRoles("admin"),
   updateUserRole
@@ -28,5 +35,16 @@ adminRouter.delete(
   authorizeRoles("admin"),
   deleteUser
 );
-
+adminRouter.get(
+  "/get-all-doctors",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAllDoctors
+);
+adminRouter.get(
+  "/get-all-admins",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  getAllAdmin
+);
 export default adminRouter;

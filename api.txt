@@ -1,0 +1,55 @@
+user api 
+
+1. register
+2. activate
+3. login
+4. logout
+5. refresh
+6. me
+7. update-user-info
+8. update-user-password
+***********************************
+9. social-auth *
+10.forgot-password*
+11. Review Rating*
+12. find doctor with tag //done
+13. wishlist doctor
+14. find a doctor with pincode
+15. find a doctor with with district
+
+
+
+doctor api
+
+1. update-password
+2. forgot-password*
+3. doctor-see reviews
+4. add google map link
+5. doctor-add fees
+6. doctor-increase fees
+7. 
+
+
+
+admin api
+1. create-doctor
+2. get-all-users
+3. update-user
+4. delete-user/:id
+***********************************
+5. find all doctors with tag specialists
+6. find a doctor with pincode
+7. find a doctor with with district
+8. daily login users -analytics
+9. weekly, monthly, yealy users -analytics
+10.total users increase month to month base
+11.check user location
+12.
+
+
+
+******************************************
+problem with otology vs Otology
+
+******************************************
+review not working

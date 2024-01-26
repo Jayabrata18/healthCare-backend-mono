@@ -17,6 +17,7 @@ import {
   getAllUsersService,
   getDoctorBySpecializationService,
   getUserById,
+  getUserById2,
   updateUserRoleService,
 } from "../services/userService";
 import { RequestApi } from "../types/custom";
@@ -451,7 +452,7 @@ export const userReview = catchAsyncError(
   async (req: RequestApi, res: Response, next: NextFunction) => {
     try {
       const reviewerUserId = req.user?._id || ""; // ID of the user writing the review
-      const userIdToReview = req.params; // ID of the user to be reviewed
+      const userIdToReview = req.params._id; // ID of the user to be reviewed
       const { rating, text } = req.body;
       if (!rating || !text) {
         return res.status(400).json({
@@ -459,7 +460,7 @@ export const userReview = catchAsyncError(
           message: "Rating and text are required for a review",
         });
       }
-      const reviewerUserInfo = await getUserById(reviewerUserId, res);
+      const reviewerUserInfo = await getUserById2(reviewerUserId, res);
 
       if (!reviewerUserInfo) {
         return res.status(404).json({

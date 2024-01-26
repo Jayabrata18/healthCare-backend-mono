@@ -7,11 +7,18 @@ export const getUserById = async (id: string, res: Response) => {
 
   if (userJson) {
     const user = JSON.parse(userJson);
-    return { _id: user._id, name: user.name };
     res.status(201).json({
       status: "success",
       user,
     });
+  }
+};
+export const getUserById2 = async (id: string, res: Response) => {
+  const userJson = await redis.get(id);
+
+  if (userJson) {
+    const user = JSON.parse(userJson);
+    return { _id: user._id, name: user.name };
   }
 };
 
@@ -73,7 +80,7 @@ export const getDoctorBySpecializationService = async (
   });
 };
 
-//get all admin 
+//get all admin
 export const getAllAdminService = async (res: Response) => {
   const users = await userModel.find({ role: "admin" }).sort({ createdAt: -1 });
   const count = await userModel.countDocuments({ role: "admin" });

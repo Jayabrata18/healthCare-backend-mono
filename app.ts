@@ -7,6 +7,7 @@ import userRouter from "./routes/userRoutes";
 // import orderRouter from "./routes/orderRoute";
 import notificationRoute from "./routes/notificationRoute";
 import adminRouter from "./routes/adminRoutes";
+import doctorRouter from "./routes/doctoeRoute";
 
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ app.use("/api/v1/users", userRouter);
 // app.use("/api/v1", orderRouter);
 app.use("/api/v1", notificationRoute);
 app.use("/api/v1", adminRouter);
+app.use("/api/v1", doctorRouter);
 
 //api
 app.get("/", (req: Request, res: Response, next: NextFunction) => {

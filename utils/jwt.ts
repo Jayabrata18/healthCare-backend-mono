@@ -2,7 +2,6 @@ require("dotenv").config();
 import { Response } from "express";
 import { IUser } from "../models/userModel";
 import { redis } from "./redis";
-import { IDoctor } from "../models/doctorModel";
 
 interface ITokenOptions {
   expires: Date;
@@ -38,30 +37,6 @@ export const refreshTokenOptions: ITokenOptions = {
 };
 
 export const sendToken = (user: IUser, statusCode: number, res: Response) => {
-  const accessToken = user.SignAccessToken();
-  const refreshToken = user.SignRefreshToken();
-  //upload session on redis
-  redis.set(user._id, JSON.stringify(user) as any);
-
-  //only set secure to true in prduction
-  if (process.env.NODE_ENV === "production") {
-    accessTokenOptions.secure = true;
-    refreshTokenOptions.secure = true;
-  }
-  res.cookie("access_token", accessToken, accessTokenOptions);
-  res.cookie("refresh_token", refreshToken, refreshTokenOptions);
-  res.status(statusCode).json({
-    success: true,
-    user,
-    accessToken,
-  });
-};
-
-export const sendToken2 = (
-  user: IDoctor,
-  statusCode: number,
-  res: Response
-) => {
   const accessToken = user.SignAccessToken();
   const refreshToken = user.SignRefreshToken();
   //upload session on redis

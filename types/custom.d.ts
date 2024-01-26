@@ -7,9 +7,6 @@ declare global {
     export interface RequestApi {
       user?: Record<string, any>;
     }
-    export interface RequestDoctorApi {
-      doctor?: Record<string, any>;
-    }
   }
 }
 
@@ -17,9 +14,3 @@ export interface RequestApi extends Request {
   user?: Record<string, any>;
 }
 
-export interface RequestDoctorApi extends Request {
-  doctor?: Record<string, any>;
-}
-export interface ResponseDoctorApi extends Response {
-  [key: string]: any;
-}

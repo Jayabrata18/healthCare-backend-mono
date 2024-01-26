@@ -5,6 +5,29 @@ import jwt from "jsonwebtoken";
 
 const emailRegePattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+
+enum SpecialistType {
+  Dentist = "Dentist",
+  Cardiology = "Cardiology",
+  Orthopedic = "Orthopedic",
+  Neurology = "Neurology",
+  Gastroenterology = "Gastroenterology",
+  Otology = "Otology",
+  Rhinology = "Rhinology",
+  Urology = "Urology",
+  Gynecology = "Gynecology",
+  Pulmonology = "Pulmonology",
+  Pediatrics = "Pediatrics",
+  General = "General",
+  ChildSpecialist = "ChildSpecialist",
+}
+export interface IChemberAddress {
+  address: string;
+  pincode: string;
+  district: string;
+  state: string;
+}
+
 export interface IUser extends Document {
   name: string;
   email: string;
@@ -23,6 +46,11 @@ export interface IUser extends Document {
   role: string;
   // previousDoctorBookings: Schema.Types.ObjectId[];
   isVerified: boolean;
+  specialist: SpecialistType;
+  experience: number;
+  education: string;
+  chemberAddress: IChemberAddress[];
+
   comparePassword(password: string): Promise<boolean>;
   SignAccessToken: () => string;
   SignRefreshToken: () => string;
@@ -112,6 +140,29 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    specialist: {
+      type: String,
+      enum: Object.values(SpecialistType),
+    },
+    experience: {
+      type: Number,
+    },
+    chemberAddress: [
+      {
+        address: String,
+        pincode: {
+          type: String,
+          validate: {
+            validator: function (v: string) {
+              return /\d{6}/.test(v);
+            },
+            message: (props: any) => `${props.value} is not a valid pincode!`,
+          },
+        },
+        district: String,
+        state: String,
+      },
+    ],
   },
   { timestamps: true }
 );

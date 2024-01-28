@@ -29,8 +29,7 @@
     "mongoose": "^8.0.3",
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.7",
-    "nodemailer-smtp-transport": "^2.7.4",
-    "nodemon": "^3.0.3"
+    "nodemailer-smtp-transport": "^2.7.4"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
@@ -38,6 +37,7 @@
     "@types/node": "^20.11.5",
     "@types/nodemailer": "^6.4.14",
     "@types/nodemailer-smtp-transport": "^2.7.8",
+    "nodemon": "^3.0.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"

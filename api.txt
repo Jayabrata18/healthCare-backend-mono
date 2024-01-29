@@ -53,3 +53,65 @@ problem with otology vs Otology
 
 ******************************************
 review not working
+
+
+
+user (
+	name,
+	email,
+	password,
+	phoneNumber-1,
+	phoneNumber-2,
+	avatar: {
+		profile_link
+	},
+	role : ( Doctor | User ),
+	Gender
+	address : (
+		AddressLine 1,
+		Address Line 2,
+		Pincode,
+		town,
+		District,
+		Landmark
+	) { role == user },
+	chamberAddress : [] { role == doctor },
+	speciality { role == Doctor } ,
+	experience { role == Doctor } ,
+	previousBooking: [],
+	booking: [
+		id
+	],
+	google_map_link
+)
+
+
+booking (
+	id,
+	...items
+)
+
+review {
+	id : [],
+	id : [],
+	id : [],
+	id : [],
+	id : [],
+	id : [],
+}
+
+
+/order
+
+
+
+analytics :
+	total user
+	total doctor
+	daily booking
+
+
+
+
+
+
